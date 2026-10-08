@@ -1,1 +1,28 @@
-
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anmelden | Seelenkraft-Kompass</title>
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <main class="login-page">
+    <section class="login-card">
+      <a class="back-link" href="index.html">Zurück zum Chakrentest</a>
+      <p class="eyebrow">SEELENKRAFT-KOMPASS</p>
+      <h1>Willkommen zurück</h1>
+      <p>Melde dich an, um deine freigeschalteten Chakra-Bereiche zu öffnen.</p>
+      <form id="loginForm">
+        <label for="username">Benutzername</label>
+        <input id="username" name="username" autocomplete="username" required>
+        <label for="password">Passwort</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button id="loginButton" type="submit">Anmelden</button>
+        <p id="loginMessage" class="message" role="status"></p>
+      </form>
+    </section>
+  </main>
+  <script src="js/auth.js"></script>
+</body>
+</html>
