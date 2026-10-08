@@ -1,129 +1,394 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* =========================================================
+   GRUNDEINSTELLUNGEN
+   ========================================================= */
+
+:root {
+    --background: #f7f4ef;
+    --card-background: #fffdf9;
+    --text-dark: #27352f;
+    --text-normal: #263630;
+    --text-muted: #82786f;
+    --accent: #879d91;
+    --button: #4f7064;
+    --button-hover: #3f5f54;
+    --border: #e2ddd4;
+    --sidebar-width: 250px;
 }
 
-body{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top right, rgba(221, 235, 227, 0.65), transparent 35%),
+        linear-gradient(135deg, #faf6f1 0%, #f7f5f0 55%, #f1f7f3 100%);
+    color: var(--text-normal);
     font-family: Arial, Helvetica, sans-serif;
-    background:#f8f6f2;
-    color:#333;
-    min-height:100vh;
+    font-size: 16px;
+    line-height: 1.65;
 }
 
-.layout{
-    display:flex;
-    min-height:100vh;
+
+/* =========================================================
+   SEITENAUFTEILUNG
+   ========================================================= */
+
+.layout {
+    display: flex;
+    min-height: 100vh;
 }
 
-.sidebar{
-    width:260px;
-    background:#ffffff;
-    border-right:1px solid #e5e5e5;
-    padding:30px 20px;
+.content {
+    flex: 1;
+    min-width: 0;
+    padding: 24px 42px 70px;
 }
 
-.logo{
-    font-size:24px;
-    font-weight:700;
-    margin-bottom:30px;
+
+/* =========================================================
+   KOPFZEILE UND LOGIN
+   ========================================================= */
+
+.topbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 42px;
+    margin-bottom: 10px;
 }
 
-.menu{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
+.login-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-dark);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
 }
 
-.menu-item{
-    text-decoration:none;
-    color:#444;
-    padding:10px 0;
+.login-link:hover {
+    color: var(--button);
 }
 
-.menu-item.active{
-    font-weight:700;
+
+/* =========================================================
+   GROSSER STARTBEREICH
+   ========================================================= */
+
+.hero {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 12px 24px 48px;
+    text-align: center;
 }
 
-.menu-item.disabled{
-    color:#bdbdbd;
-    cursor:default;
-    pointer-events:none;
+.hero::before {
+    content: "MEIN SEELENKRAFT-KOMPASS";
+    display: block;
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
 }
 
-.content{
-    flex:1;
-    padding:30px 50px;
+.hero h1 {
+    max-width: 900px;
+    margin: 0 auto 20px;
+    color: var(--text-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(56px, 8vw, 116px);
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
 }
 
-.topbar{
-    display:flex;
-    justify-content:flex-end;
-    margin-bottom:40px;
+.hero h1 em,
+.hero h1 .highlight {
+    display: block;
+    color: var(--accent);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.05;
 }
 
-.login-link{
-    text-decoration:none;
-    color:#444;
+.hero p {
+    max-width: 720px;
+    margin: 30px auto 0;
+    color: var(--text-dark);
+    font-size: 20px;
+    line-height: 1.5;
 }
 
-.login-link:hover{
-    color:#000;
+
+/* =========================================================
+   ERKLÄRUNGS-KARTE
+   Benötigt in der index.html die Klasse .intro-card
+   ========================================================= */
+
+.intro-card {
+    width: 100%;
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 44px;
+    background: var(--card-background);
+    border: 1px solid var(--border);
+    border-radius: 28px;
 }
 
-.hero{
-    max-width:900px;
+.intro-label {
+    margin-bottom: 26px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
 }
 
-.hero h1{
-    font-size:48px;
-    margin-bottom:25px;
+.intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+    gap: 60px;
+    align-items: center;
 }
 
-.hero p{
-    font-size:22px;
-    margin-bottom:30px;
-    line-height:1.5;
+.intro-text {
+    min-width: 0;
 }
 
-#startTest{
-    background:#8c6a43;
-    color:white;
-    border:none;
-    padding:14px 30px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:18px;
+.intro-text h2 {
+    margin-bottom: 26px;
+    color: var(--text-dark);
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.2;
 }
 
-#startTest:hover{
-    background:#745636;
+.intro-text p {
+    margin-bottom: 22px;
+    font-size: 18px;
+    line-height: 1.85;
 }
+
+.intro-topics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    row-gap: 10px;
+    margin: 20px 0 24px;
+    padding: 0;
+    list-style: none;
+}
+
+.intro-topics li {
+    position: relative;
+    padding-left: 16px;
+    color: #4f625b;
+    font-size: 16px;
+    line-height: 1.55;
+}
+
+.intro-topics li::before {
+    content: "";
+    position: absolute;
+    top: 0.72em;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: #62786f;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* =========================================================
+   BILDBEREICH
+   ========================================================= */
+
+.intro-image {
+    width: 100%;
+    min-height: 410px;
+    overflow: hidden;
+    background: #eee8df;
+    border-radius: 2px;
+}
+
+.intro-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 410px;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   START-BUTTON
+   ========================================================= */
+
+.start-area {
+    display: flex;
+    justify-content: center;
+    margin: 36px auto 0;
+}
+
+#startTest {
+    min-width: 178px;
+    min-height: 50px;
+    padding: 13px 28px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--button);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+#startTest:hover {
+    background: var(--button-hover);
+    transform: translateY(-1px);
+}
+
+#startTest:focus-visible {
+    outline: 3px solid rgba(79, 112, 100, 0.3);
+    outline-offset: 4px;
+}
+
+
+/* =========================================================
+   TEST UND AUSWERTUNG
+   ========================================================= */
 
 #testContainer,
-#resultContainer{
-    margin-top:40px;
+#resultContainer {
+    width: 100%;
+    max-width: 1100px;
+    margin: 40px auto 0;
 }
 
-@media (max-width: 900px){
-
-    .layout{
-        flex-direction:column;
-    }
-
-    .sidebar{
-        width:100%;
-        border-right:none;
-        border-bottom:1px solid #e5e5e5;
-    }
-
-    .content{
-        padding:25px;
-    }
-
-    .hero h1{
-        font-size:38px;
-    }
-
+#testContainer[hidden],
+#resultContainer[hidden] {
+    display: none;
 }
-``
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+    .content {
+        padding: 22px 28px 60px;
+    }
+
+    .intro-card {
+        padding: 36px;
+    }
+
+    .intro-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .intro-image {
+        min-height: 360px;
+    }
+
+    .intro-image img {
+        min-height: 360px;
+    }
+}
+
+
+/* =========================================================
+   MOBIL
+   ========================================================= */
+
+@media (max-width: 760px) {
+    .layout {
+        display: block;
+    }
+
+    .content {
+        padding: 18px 18px 50px;
+    }
+
+    .topbar {
+        margin-bottom: 22px;
+    }
+
+    .hero {
+        padding: 18px 6px 38px;
+    }
+
+    .hero::before {
+        margin-bottom: 16px;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+    }
+
+    .hero h1 {
+        font-size: clamp(48px, 17vw, 76px);
+        line-height: 0.95;
+    }
+
+    .hero p {
+        margin-top: 24px;
+        font-size: 17px;
+    }
+
+    .intro-card {
+        padding: 27px 22px;
+        border-radius: 22px;
+    }
+
+    .intro-label {
+        margin-bottom: 20px;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+    }
+
+    .intro-grid {
+        gap: 28px;
+    }
+
+    .intro-text h2 {
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+
+    .intro-text p {
+        font-size: 16px;
+        line-height: 1.75;
+    }
+
+    .intro-topics {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .intro-image,
+    .intro-image img {
+        min-height: 270px;
+    }
+
+    .start-area {
+        margin-top: 28px;
+    }
+}
