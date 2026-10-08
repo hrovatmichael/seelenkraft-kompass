@@ -6,14 +6,15 @@
 
     <title>Seelenkraft-Kompass</title>
 
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/menu.css">
+    css/main.css
+    css/menu.css
 </head>
 
 <body>
 
     <div class="layout">
 
+        <!-- Linkes Seitenmenü -->
         <aside class="sidebar">
 
             <div class="logo">
@@ -58,8 +59,10 @@
 
         </aside>
 
+        <!-- Hauptinhalt -->
         <main class="content">
 
+            <!-- Anmeldung rechts oben -->
             <header class="topbar">
 
                 <a href="login.html" class="login-link">
@@ -68,23 +71,84 @@
 
             </header>
 
+            <!-- Große Überschrift -->
             <section class="hero">
 
-                <h1>Seelenkraft-Kompass</h1>
+                <h1>
+                    Ein Moment
+                    <span class="highlight">für dich.</span>
+                </h1>
 
                 <p>
                     Welche Lebensbereiche möchten gerade gesehen werden?
                 </p>
 
-                <button id="startTest" type="button">
-                    Test starten
-                </button>
+            </section>
+
+            <!-- Erklärungskarte -->
+            <section class="intro-card">
+
+                <div class="intro-label">
+                    EINFACH ERKLÄRT
+                </div>
+
+                <div class="intro-grid">
+
+                    <!-- Linke Textspalte -->
+                    <div class="intro-text">
+
+                        <h2>Was sind Chakren?</h2>
+
+                        <p>
+                            In energetischen Traditionen werden Chakren als
+                            Energiezentren verstanden. Die sieben Hauptchakren stehen
+                            sinnbildlich für unterschiedliche Bereiche unseres Lebens.
+                        </p>
+
+                        <ul class="intro-topics">
+                            <li>Vertrauen und Sicherheit</li>
+                            <li>Lebensfreude und Kreativität</li>
+                            <li>Selbstvertrauen und Stärke</li>
+                            <li>Liebe und Verbundenheit</li>
+                            <li>Kommunikation und Ausdruck</li>
+                            <li>Intuition und Klarheit</li>
+                            <li>Sinn und inneres Vertrauen</li>
+                        </ul>
+
+                        <p>
+                            Wenn uns bestimmte Themen beschäftigen, kann sich das in
+                            Gedanken, Gefühlen oder wiederkehrenden Mustern zeigen.
+                            Der Kompass möchte dir einen liebevollen Blick darauf
+                            ermöglichen. Es gibt kein Richtig oder Falsch.
+                        </p>
+
+                    </div>
+
+                    <!-- Rechter Bildbereich -->
+                    <div class="intro-image" id="chakraImage">
+
+                        <!-- Das Bild wird später hier eingefügt. -->
+
+                    </div>
+
+                </div>
 
             </section>
 
+            <!-- Test starten -->
+            <div class="start-area">
+
+                <button id="startTest" type="button">
+                    Test starten →
+                </button>
+
+            </div>
+
+            <!-- Der Chakrentest wird hier angezeigt -->
             <section id="testContainer" hidden>
             </section>
 
+            <!-- Die Auswertung wird hier angezeigt -->
             <section id="resultContainer" hidden>
             </section>
 
@@ -92,7 +156,7 @@
 
     </div>
 
-    <script src="js/chakrentest.js"></script>
+    js/chakrentest.jsscript>
 
 </body>
 </html>
