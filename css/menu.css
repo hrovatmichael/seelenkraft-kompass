@@ -1,1 +1,110 @@
+/* =========================================================
+   LINKES SEITENMENUE
+   ========================================================= */
 
+.sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 var(--sidebar-width, 250px);
+    width: var(--sidebar-width, 250px);
+    height: 100vh;
+    padding: 34px 24px;
+    overflow-y: auto;
+    background: rgba(255, 253, 249, 0.96);
+    border-right: 1px solid var(--border, #e2ddd4);
+}
+
+.logo {
+    margin-bottom: 38px;
+    color: var(--text-dark, #27352f);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    color: var(--text-dark, #27352f);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-item:hover {
+    background: #f1eee8;
+}
+
+.menu-item.active {
+    background: var(--button, #4f7064);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.menu-item.active:hover {
+    background: var(--button-hover, #3f5f54);
+}
+
+.menu-item.disabled {
+    color: #b7b4ae;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+}
+
+.menu-item:focus-visible {
+    outline: 3px solid rgba(79, 112, 100, 0.28);
+    outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 22px 20px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border, #e2ddd4);
+    }
+
+    .logo {
+        margin-bottom: 18px;
+        font-size: 22px;
+    }
+
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .menu-item {
+        min-height: 42px;
+        padding: 9px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 560px) {
+    .sidebar {
+        padding: 18px 16px;
+    }
+
+    .menu {
+        grid-template-columns: 1fr;
+    }
+}
