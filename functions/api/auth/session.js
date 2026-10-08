@@ -1,1 +1,2 @@
-
+import{json,currentUser}from"./_helpers.js";
+export async function onRequestGet({request,env}){const user=await currentUser(request,env);if(!user)return json({authenticated:false},401);const days=user.access_expires_at?Math.ceil((Date.parse(user.access_expires_at)-Date.now())/86400000):null;return json({authenticated:true,user:{username:user.username,displayName:user.display_name,role:user.role,accessExpiresAt:user.access_expires_at,lastLoginAt:user.last_login_at,daysRemaining:days,showRenewButton:user.role!=="admin"&&days!==null&&days<=7}})}
