@@ -1,1 +1,83 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benutzerverwaltung | Seelenkraft-Kompass</title>
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+<aside class="admin-sidebar">
+<div class="admin-logo">Seelenkraft-Kompass</div>
+<nav class="admin-navigation" aria-label="Admin-Navigation">
+<a href="../index.html" class="admin-navigation-link">Chakrentest</a>
+<a href="benutzer.html" class="admin-navigation-link active" aria-current="page">Benutzerverwaltung</a>
+</nav>
+<button id="logoutButton" class="logout-button" type="button">Abmelden</button>
+</aside>
+<main class="admin-content">
+<header class="admin-header"><div><p class="admin-eyebrow">ADMINBEREICH</p><h1>Benutzerverwaltung</h1><p class="admin-intro">Benutzer anlegen, Zugänge verwalten und Chakra-Seiten individuell freischalten.</p></div><div class="admin-session"><span id="adminSessionText">Anmeldung wird geprüft …</span></div></header>
+<p id="adminMessage" class="admin-message" role="status" aria-live="polite"></p>
+<section class="admin-card">
+<div class="card-heading"><div><p class="section-eyebrow">NEUER ZUGANG</p><h2>Benutzer anlegen</h2></div></div>
+<form id="createUserForm" class="admin-form">
+<div class="form-grid">
+<div class="form-field"><label for="displayName">Anzeigename</label><input id="displayName" name="displayName" type="text" autocomplete="name" required></div>
+<div class="form-field"><label for="username">Benutzername</label><input id="username" name="username" type="text" autocomplete="off" required></div>
+<div class="form-field"><label for="email">E-Mail-Adresse</label><input id="email" name="email" type="email" autocomplete="email"></div>
+<div class="form-field"><label for="password">Passwort</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="10" required><small>Mindestens 10 Zeichen.</small></div>
+<div class="form-field"><label for="accessExpiresAt">Zugang gültig bis</label><input id="accessExpiresAt" name="accessExpiresAt" type="date" required></div>
+<div class="form-field checkbox-field"><label><input id="isActive" name="isActive" type="checkbox" checked> Zugang ist aktiv</label></div>
+</div>
+<fieldset class="chakra-selection"><legend>Chakra-Seiten freischalten</legend><div class="chakra-checkboxes">
+<label><input type="checkbox" name="chakras" value="wurzel"> Wurzelchakra</label>
+<label><input type="checkbox" name="chakras" value="sakral"> Sakralchakra</label>
+<label><input type="checkbox" name="chakras" value="solar"> Solarplexuschakra</label>
+<label><input type="checkbox" name="chakras" value="herz"> Herzchakra</label>
+<label><input type="checkbox" name="chakras" value="hals"> Halschakra</label>
+<label><input type="checkbox" name="chakras" value="stirn"> Stirnchakra</label>
+<label><input type="checkbox" name="chakras" value="krone"> Kronenchakra</label>
+</div></fieldset>
+<div class="form-actions"><button id="createUserButton" class="primary-button" type="submit">Benutzer anlegen</button></div>
+</form>
+</section>
+<section class="admin-card">
+<div class="card-heading"><div><p class="section-eyebrow">VORHANDENE ZUGÄNGE</p><h2>Benutzer</h2></div><button id="reloadUsersButton" class="secondary-button" type="button">Benutzer neu laden</button></div>
+<div id="usersLoading" class="loading-message">Benutzer werden geladen …</div>
+<div id="usersEmpty" class="empty-message" hidden>Es wurden noch keine Benutzer angelegt.</div>
+<div id="usersList" class="users-list"></div>
+</section>
+</main>
+</div>
+<template id="userCardTemplate">
+<article class="user-card">
+<header class="user-card-header"><div><h3 class="user-display-name">Benutzer</h3><p class="user-username"></p></div><span class="user-status">Aktiv</span></header>
+<div class="user-information">
+<div class="information-item"><span class="information-label">E-Mail</span><span class="user-email">Keine E-Mail hinterlegt</span></div>
+<div class="information-item"><span class="information-label">Zugang gültig bis</span><span class="user-access-expires">Nicht festgelegt</span></div>
+<div class="information-item"><span class="information-label">Letzte Anmeldung</span><span class="user-last-login">Noch keine Anmeldung</span></div>
+<div class="information-item"><span class="information-label">Verbleibende Gültigkeit</span><span class="user-days-remaining">Nicht berechnet</span></div>
+</div>
+<div class="user-chakras"><h4>Freigeschaltete Chakra-Seiten</h4><div class="user-chakra-checkboxes">
+<label><input type="checkbox" name="userChakras" value="wurzel"> Wurzelchakra</label>
+<label><input type="checkbox" name="userChakras" value="sakral"> Sakralchakra</label>
+<label><input type="checkbox" name="userChakras" value="solar"> Solarplexuschakra</label>
+<label><input type="checkbox" name="userChakras" value="herz"> Herzchakra</label>
+<label><input type="checkbox" name="userChakras" value="hals"> Halschakra</label>
+<label><input type="checkbox" name="userChakras" value="stirn"> Stirnchakra</label>
+<label><input type="checkbox" name="userChakras" value="krone"> Kronenchakra</label>
+</div></div>
+<div class="user-edit-grid">
+<div class="form-field"><label>Zugang gültig bis</label><input class="edit-access-expires" type="date"></div>
+<div class="form-field"><label>Neues Passwort</label><input class="edit-password" type="password" autocomplete="new-password" minlength="10" placeholder="Nur zum Ändern ausfüllen"></div>
+<div class="form-field checkbox-field"><label><input class="edit-is-active" type="checkbox"> Zugang aktiv</label></div>
+</div>
+<section class="usage-section"><h4>Nutzung der Chakra-Seiten</h4><div class="usage-list">Noch keine Nutzungsdaten vorhanden.</div></section>
+<footer class="user-card-actions"><button class="save-user-button primary-button" type="button">Änderungen speichern</button><button class="delete-user-button danger-button" type="button">Benutzer löschen</button></footer>
+</article>
+</template>
+<script src="../js/admin.js"></script>
+</body>
+</html>
