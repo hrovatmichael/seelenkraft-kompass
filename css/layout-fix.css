@@ -1,0 +1,99 @@
+/* Darstellung der Startgrafik */
+.intro-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    overflow: hidden;
+    background: #f1eee8;
+    border-radius: 18px;
+}
+
+.intro-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+    object-fit: contain;
+}
+
+/* Chakra-Auswertung: Text links, Bild rechts */
+.detail {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr) !important;
+    column-gap: 30px !important;
+    align-items: start !important;
+}
+
+.detailHead {
+    grid-column: 1 / -1 !important;
+}
+
+.detail > .chakraMedia {
+    grid-column: 2 !important;
+    grid-row: 2 / span 7 !important;
+    align-self: start !important;
+    margin: 10px 0 0 !important;
+    min-height: 220px !important;
+}
+
+.detail > .detailText,
+.detail > .impulseBox,
+.detail > .chakraActions {
+    grid-column: 1 !important;
+}
+
+.chakraMedia img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 480px !important;
+    object-fit: contain !important;
+}
+
+.chakraMediaPlaceholder {
+    min-height: 220px;
+}
+
+.chakraActions {
+    align-items: stretch;
+}
+
+/* Tablet und Handy */
+@media (max-width: 900px) {
+    .detail {
+        grid-template-columns: 1fr !important;
+    }
+
+    .detailHead,
+    .detail > .chakraMedia,
+    .detail > .detailText,
+    .detail > .impulseBox,
+    .detail > .chakraActions {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+
+    .detail > .chakraMedia {
+        margin-top: 18px !important;
+    }
+
+    .chakraMedia img {
+        max-height: 380px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .intro-image {
+        min-height: 220px;
+    }
+
+    .intro-image img,
+    .chakraMedia img {
+        max-height: 300px !important;
+    }
+
+    .detail {
+        padding: 17px !important;
+    }
+}
