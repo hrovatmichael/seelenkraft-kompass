@@ -1,0 +1,203 @@
+:root {
+    --background: #f7f4ef;
+    --surface: #fffdf9;
+    --text: #27352f;
+    --muted: #82786f;
+    --accent: #4f7064;
+    --border: #e2ddd4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(
+            circle at top right,
+            #e7efe9,
+            transparent 35%
+        ),
+        var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.account-page {
+    width: min(
+        1100px,
+        calc(100% - 32px)
+    );
+    margin: auto;
+    padding: 30px 0 70px;
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.account-header a {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.account-header button {
+    padding: 9px 15px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.account-hero {
+    padding: 68px 0 35px;
+}
+
+.eyebrow {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+}
+
+.account-hero h1 {
+    margin: 8px 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 7vw, 74px);
+    font-weight: 500;
+    line-height: 1;
+}
+
+.account-hero p {
+    color: var(--muted);
+}
+
+.account-message {
+    color: #9b3f3f;
+}
+
+.account-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.account-card,
+.account-usage {
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.account-card {
+    display: grid;
+    gap: 8px;
+}
+
+.account-card span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.account-card strong {
+    font-size: 18px;
+}
+
+.account-highlight {
+    background: #eef3ef;
+}
+
+.account-highlight a {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.account-wide {
+    grid-column: span 3;
+}
+
+.account-usage {
+    margin-top: 22px;
+}
+
+.account-usage h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 31px;
+    font-weight: 500;
+}
+
+.usage-list {
+    display: grid;
+    gap: 10px;
+}
+
+.usage-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f2eee8;
+    border-radius: 13px;
+}
+
+.usage-row div {
+    display: grid;
+    gap: 4px;
+}
+
+.usage-row span,
+.empty-message {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+@media (max-width: 760px) {
+    .account-page {
+        width: min(
+            calc(100% - 24px),
+            700px
+        );
+        padding-top: 18px;
+    }
+
+    .account-hero {
+        padding: 45px 0 25px;
+    }
+
+    .account-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .account-wide {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 520px) {
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-wide {
+        grid-column: auto;
+    }
+
+    .usage-row {
+        align-items: flex-start;
+    }
+
+    .account-header a {
+        font-size: 13px;
+    }
+}
