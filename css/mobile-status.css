@@ -1,0 +1,79 @@
+/* Nur fuer Handys */
+@media (max-width: 760px) {
+    body.session-mobile {
+        padding-top: 126px;
+    }
+
+    .topbar .user-statusbar {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        left: 0;
+        z-index: 999;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 5px 10px;
+        align-items: center;
+        width: 100%;
+        padding: 8px 12px;
+        border-width: 0 0 1px;
+        border-style: solid;
+        border-color: #e2ddd4;
+        border-radius: 0;
+        background: rgba(255, 253, 249, 0.99);
+    }
+
+    .user-statusbar-text {
+        display: flex !important;
+        gap: 6px !important;
+        align-items: center;
+        min-width: 0;
+    }
+
+    .user-statusbar-text strong {
+        overflow: hidden;
+        color: #27352f;
+        font-size: 13px !important;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .user-statusbar-text span {
+        color: #82786f;
+        font-size: 12px !important;
+        white-space: nowrap;
+    }
+
+    .user-statusbar-actions {
+        display: grid !important;
+        grid-template-columns: auto;
+        gap: 4px !important;
+        justify-items: end;
+    }
+
+    .statusbar-button.logout {
+        min-height: 32px !important;
+        padding: 6px 9px !important;
+        font-size: 12px !important;
+        white-space: nowrap;
+    }
+
+    .statusbar-button.renew {
+        grid-column: 1 / -1;
+        justify-self: start;
+        min-height: 26px !important;
+        margin-top: 2px;
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+    }
+
+    .statusbar-button.secondary {
+        display: none !important;
+    }
+}
+
+@media (max-width: 390px) {
+    .user-statusbar-text strong {
+        max-width: 112px;
+    }
+}
