@@ -2,89 +2,151 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.querySelector(".sidebar");
-    const menu = document.querySelector(".menu");
+    const logo = document.querySelector(".sidebar .logo");
+    const menu = document.querySelector(".sidebar .menu");
 
-    if (!sidebar || !menu) {
+    if (!sidebar || !logo || !menu) {
+        console.error(
+            "Mobiles Menü konnte nicht aufgebaut werden.",
+            {
+                sidebarGefunden: Boolean(sidebar),
+                logoGefunden: Boolean(logo),
+                menuGefunden: Boolean(menu)
+            }
+        );
+
         return;
     }
 
-    const menuButton = document.createElement("button");
+    /*
+     * Das vorhandene Logo wird am Handy zum Menüknopf.
+     */
+    logo.innerHTML = "";
 
-    menuButton.id = "mobileMenuButton";
-    menuButton.className = "mobile-menu-button";
-    menuButton.type = "button";
-    menuButton.setAttribute("aria-label", "Menü öffnen");
-    menuButton.setAttribute("aria-expanded", "false");
-    menuButton.textContent = "⋮";
+    const brandText = document.createElement("span");
+    brandText.className = "mobile-brand-text";
+    brandText.textContent = "Seelenkraft-Kompass";
 
-    sidebar.appendChild(menuButton);
+    const menuDots = document.createElement("span");
+    menuDots.className = "mobile-menu-dots";
+    menuDots.textContent = "⋮";
+    menuDots.setAttribute("aria-hidden", "true");
 
-    menuButton.addEventListener("click", () => {
-        const menuIsOpen = sidebar.classList.toggle(
-            "mobile-menu-open"
-        );
+    logo.append(
+        brandText,
+        menuDots
+    );
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            String(menuIsOpen)
-        );
+    logo.setAttribute("role", "button");
+    logo.setAttribute("tabindex", "0");
+    logo.setAttribute("aria-label", "Menü öffnen");
+    logo.setAttribute("aria-expanded", "false");
+    logo.setAttribute("aria-controls", "mobileMainMenu");
 
-        menuButton.setAttribute(
-            "aria-label",
-            menuIsOpen
-                ? "Menü schließen"
-                : "Menü öffnen"
-        );
-    });
+    menu.id = "mobileMainMenu";
 
-    menu.addEventListener("click", event => {
-        if (
-            window.innerWidth <= 760 &&
-            event.target.closest("a")
-        ) {
-            sidebar.classList.remove(
-                "mobile-menu-open"
-            );
-
-            menuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-        }
-    });
-
-    document.addEventListener("click", event => {
-        if (
-            window.innerWidth > 760 ||
-            !sidebar.classList.contains(
-                "mobile-menu-open"
-            )
-        ) {
+    function menuOeffnenOderSchliessen() {
+        if (window.innerWidth > 760) {
             return;
         }
 
-        if (!sidebar.contains(event.target)) {
-            sidebar.classList.remove(
-                "mobile-menu-open"
-            );
+        const istGeoeffnet = sidebar.classList.toggle(
+            "mobile-menu-open"
+        );
 
-            menuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+        logo.setAttribute(
+            "aria-expanded",
+            String(istGeoeffnet)
+        );
+
+        logo.setAttribute(
+            "aria-label",
+            istGeoeffnet
+                ? "Menü schließen"
+                : "Menü öffnen"
+        );
+
+        menuDots.textContent = istGeoeffnet
+            ? "×"
+            : "⋮";
+    }
+
+    function menuSchliessen() {
+        sidebar.classList.remove(
+            "mobile-menu-open"
+        );
+
+        logo.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        logo.setAttribute(
+            "aria-label",
+            "Menü öffnen"
+        );
+
+        menuDots.textContent = "⋮";
+    }
+
+    logo.addEventListener(
+        "click",
+        menuOeffnenOderSchliessen
+    );
+
+    logo.addEventListener(
+        "keydown",
+        event => {
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+                event.preventDefault();
+                menuOeffnenOderSchliessen();
+            }
+
+            if (event.key === "Escape") {
+                menuSchliessen();
+            }
         }
-    });
+    );
 
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 760) {
-            sidebar.classList.remove(
-                "mobile-menu-open"
-            );
-
-            menuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+    menu.addEventListener(
+        "click",
+        event => {
+            if (
+                window.innerWidth <= 760 &&
+                event.target.closest("a")
+            ) {
+                menuSchliessen();
+            }
         }
-    });
+    );
+
+    document.addEventListener(
+        "click",
+        event => {
+            if (window.innerWidth > 760) {
+                return;
+            }
+
+            if (
+                sidebar.classList.contains(
+                    "mobile-menu-open"
+                ) &&
+                !sidebar.contains(event.target)
+            ) {
+                menuSchliessen();
+            }
+        }
+    );
+
+    window.addEventListener(
+        "resize",
+        () => {
+            if (window.innerWidth > 760) {
+                menuSchliessen();
+            }
+        }
+    );
 });
