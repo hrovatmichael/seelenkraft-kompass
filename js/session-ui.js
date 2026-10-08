@@ -6,32 +6,26 @@
             title: "Wurzelchakra",
             pagePath: "/chakra/wurzelchakra.html"
         },
-
         sakral: {
             title: "Sakralchakra",
             pagePath: "/chakra/sakralchakra.html"
         },
-
         solar: {
             title: "Solarplexuschakra",
             pagePath: "/chakra/solarplexuschakra.html"
         },
-
         herz: {
             title: "Herzchakra",
             pagePath: "/chakra/herzchakra.html"
         },
-
         hals: {
             title: "Halschakra",
             pagePath: "/chakra/halschakra.html"
         },
-
         stirn: {
             title: "Stirnchakra",
             pagePath: "/chakra/stirnchakra.html"
         },
-
         krone: {
             title: "Kronenchakra",
             pagePath: "/chakra/kronenchakra.html"
@@ -48,9 +42,9 @@
     async function initializeSessionInterface() {
         addSessionStyles();
 
-        const session = await loadSession();
+        const sessionData = await loadSession();
 
-        if (!session?.authenticated) {
+        if (!sessionData.authenticated) {
             showGuestInterface();
             return;
         }
@@ -58,8 +52,8 @@
         const chakraData = await loadChakras();
 
         showAuthenticatedInterface(
-            session.user,
-            chakraData?.chakras || []
+            sessionData.user,
+            chakraData.chakras || []
         );
     }
 
@@ -104,12 +98,24 @@
                 }
             );
 
-            const data = await response.json();
+            const text = await response.text();
+
+            let data = {};
+
+            if (text) {
+                try {
+                    data = JSON.parse(text);
+                } catch {
+                    data = {
+                        error: text
+                    };
+                }
+            }
 
             if (!response.ok) {
                 throw new Error(
                     data.error ||
-                    "Chakra-Freigaben konnten nicht geladen werden."
+                    "Die Chakra-Freigaben konnten nicht geladen werden."
                 );
             }
 
@@ -127,7 +133,7 @@
     }
 
     function showGuestInterface() {
-        disableAllChakraMenuItems();
+        updateChakraMenu(new Set());
 
         const topbar = document.querySelector(".topbar");
 
@@ -135,11 +141,15 @@
             return;
         }
 
-        topbar.innerHTML = `
-            /login.html
-                Anmelden
-            </a>
-        `;
+        topbar.innerHTML = "";
+
+        const loginLink = document.createElement("a");
+
+        loginLink.href = "/login.html";
+        loginLink.className = "login-link";
+        loginLink.textContent = "Anmelden";
+
+        topbar.appendChild(loginLink);
     }
 
     function showAuthenticatedInterface(
@@ -147,100 +157,85 @@
         grantedChakras
     ) {
         const grantedKeys = new Set(
-            grantedChakras.map(chakra => chakra.key)
+            grantedChakras.map(chakra => {
+                return chakra.key;
+            })
         );
 
-        activateChakraMenuItems(grantedKeys);
+        if (user.role === "admin") {
+            chakraKeys.forEach(key => {
+                grantedKeys.add(key);
+            });
+        }
+
+        updateChakraMenu(grantedKeys);
         renderStatusBar(user);
     }
 
-    function disableAllChakraMenuItems() {
+    function updateChakraMenu(grantedKeys) {
         const menu = document.querySelector(".menu");
 
         if (!menu) {
             return;
         }
-
-        const chakraItems = [
-            ...menu.querySelectorAll(".menu-item")
-        ].filter(item => {
-            return chakraKeys.some(key => {
-                return normalizeText(item.textContent).includes(
-                    normalizeText(
-                        chakraConfiguration[key].title
-                    )
-                );
-            });
-        });
-
-        chakraItems.forEach(item => {
-            const replacement = document.createElement("span");
-
-            replacement.className = "menu-item disabled";
-            replacement.textContent = item.textContent.trim();
-            replacement.setAttribute(
-                "aria-disabled",
-                "true"
-            );
-
-            item.replaceWith(replacement);
-        });
-    }
-
-    function activateChakraMenuItems(grantedKeys) {
-        const menu = document.querySelector(".menu");
-
-        if (!menu) {
-            return;
-        }
-
-        const menuItems = [
-            ...menu.querySelectorAll(".menu-item")
-        ];
 
         chakraKeys.forEach(key => {
             const configuration =
                 chakraConfiguration[key];
 
-            const currentItem = menuItems.find(item => {
-                return normalizeText(
-                    item.textContent
-                ).includes(
-                    normalizeText(configuration.title)
-                );
-            });
+            const existingItem = findMenuItem(
+                menu,
+                configuration.title
+            );
 
-            if (!currentItem) {
+            if (!existingItem) {
                 return;
             }
 
-            if (!grantedKeys.has(key)) {
-                const disabledItem =
-                    document.createElement("span");
+            if (grantedKeys.has(key)) {
+                const link = document.createElement("a");
 
-                disabledItem.className =
-                    "menu-item disabled";
+                link.href = configuration.pagePath;
+                link.className = "menu-item";
+                link.textContent = configuration.title;
+                link.dataset.chakraKey = key;
 
-                disabledItem.textContent =
-                    configuration.title;
-
-                disabledItem.setAttribute(
-                    "aria-disabled",
-                    "true"
-                );
-
-                currentItem.replaceWith(disabledItem);
+                existingItem.replaceWith(link);
                 return;
             }
 
-            const activeLink =
-                document.createElement("a");
+            const disabledItem =
+                document.createElement("span");
 
-            activeLink.className = "menu-item";
-            activeLink.href = configuration.pagePath;
-            activeLink.textContent = configuration.title;
+            disabledItem.className =
+                "menu-item disabled";
 
-            currentItem.replaceWith(activeLink);
+            disabledItem.textContent =
+                configuration.title;
+
+            disabledItem.dataset.chakraKey = key;
+
+            disabledItem.setAttribute(
+                "aria-disabled",
+                "true"
+            );
+
+            existingItem.replaceWith(disabledItem);
+        });
+    }
+
+    function findMenuItem(menu, title) {
+        const normalizedTitle =
+            normalizeText(title);
+
+        return [
+            ...menu.querySelectorAll(".menu-item")
+        ].find(item => {
+            const itemText = normalizeText(
+                item.textContent
+            );
+
+            return itemText === normalizedTitle;
         });
     }
 
@@ -251,10 +246,32 @@
             return;
         }
 
+        topbar.innerHTML = "";
+
+        const statusbar =
+            document.createElement("div");
+
+        statusbar.className = "user-statusbar";
+
+        const textArea =
+            document.createElement("div");
+
+        textArea.className =
+            "user-statusbar-text";
+
+        const loggedInText =
+            document.createElement("strong");
+
         const displayName =
             user.displayName ||
             user.username ||
             "Benutzer";
+
+        loggedInText.textContent =
+            `Angemeldet als ${displayName}`;
+
+        const validityText =
+            document.createElement("span");
 
         const daysRemaining =
             user.role === "admin"
@@ -263,75 +280,89 @@
                     user.accessExpiresAt
                 );
 
-        const validityText =
+        validityText.textContent =
             user.role === "admin"
-                ? "Vollzugriff"
+                ? "Vollzugriff auf alle Chakra-Seiten"
                 : formatValidityText(
                     user.accessExpiresAt,
                     daysRemaining
                 );
+
+        textArea.append(
+            loggedInText,
+            validityText
+        );
+
+        const actions =
+            document.createElement("div");
+
+        actions.className =
+            "user-statusbar-actions";
+
+        if (user.role === "admin") {
+            const adminLink =
+                document.createElement("a");
+
+            adminLink.href =
+                "/admin/benutzer.html";
+
+            adminLink.className =
+                "statusbar-button secondary";
+
+            adminLink.textContent =
+                "Adminbereich";
+
+            actions.appendChild(adminLink);
+        }
 
         const showRenewButton =
             user.role !== "admin" &&
             daysRemaining !== null &&
             daysRemaining <= 7;
 
-        topbar.innerHTML = `
-            <div class="user-statusbar">
+        if (showRenewButton) {
+            const renewButton =
+                document.createElement("a");
 
-                <div class="user-statusbar-text">
+            renewButton.href =
+                "/zugang-verlaengern.html";
 
-                    <strong>
-                        Angemeldet als ${escapeHtml(displayName)}
-                    </strong>
+            renewButton.className =
+                "statusbar-button renew";
 
-                    <span>
-                        ${escapeHtml(validityText)}
-                    </span>
+            renewButton.textContent =
+                "Zugang verlängern";
 
-                </div>
+            actions.appendChild(renewButton);
+        }
 
-                <div class="user-statusbar-actions">
+        const logoutButton =
+            document.createElement("button");
 
-                    ${
-                        user.role === "admin"
-                            ? `
-                                /admin/benutzer.html
-                                    Adminbereich
-                                </a>
-                            `
-                            : ""
-                    }
+        logoutButton.id =
+            "sessionLogoutButton";
 
-                    ${
-                        showRenewButton
-                            ? `
-                                /zugang-verlaengern.html
-                                    Zugang verlängern
-                                </a>
-                            `
-                            : ""
-                    }
+        logoutButton.type = "button";
 
-                    <button
-                        id="sessionLogoutButton"
-                        class="statusbar-button logout"
-                        type="button"
-                    >
-                        Abmelden
-                    </button>
+        logoutButton.className =
+            "statusbar-button logout";
 
-                </div>
+        logoutButton.textContent =
+            "Abmelden";
 
-            </div>
-        `;
+        logoutButton.addEventListener(
+            "click",
+            logout
+        );
 
-        document
-            .getElementById("sessionLogoutButton")
-            ?.addEventListener(
-                "click",
-                logout
-            );
+        actions.appendChild(logoutButton);
+
+        statusbar.append(
+            textArea,
+            actions
+        );
+
+        topbar.appendChild(statusbar);
     }
 
     function calculateDaysRemaining(value) {
@@ -339,9 +370,14 @@
             return null;
         }
 
-        const expirationDate = new Date(value);
+        const expirationDate =
+            new Date(value);
 
-        if (Number.isNaN(expirationDate.getTime())) {
+        if (
+            Number.isNaN(
+                expirationDate.getTime()
+            )
+        ) {
             return null;
         }
 
@@ -361,9 +397,16 @@
             return "Keine Gültigkeitsdauer hinterlegt";
         }
 
-        const expirationDate = new Date(
-            accessExpiresAt
-        );
+        const expirationDate =
+            new Date(accessExpiresAt);
+
+        if (
+            Number.isNaN(
+                expirationDate.getTime()
+            )
+        ) {
+            return "Gültigkeitsdatum ist ungültig";
+        }
 
         const formattedDate =
             new Intl.DateTimeFormat(
@@ -381,16 +424,18 @@
         }
 
         if (daysRemaining === 0) {
-            return `Zugang läuft heute ab`;
+            return "Zugang läuft heute ab";
         }
 
         if (daysRemaining === 1) {
             return `Gültig bis ${formattedDate} · noch 1 Tag`;
         }
 
-        return daysRemaining === null
-            ? `Gültig bis ${formattedDate}`
-            : `Gültig bis ${formattedDate} · noch ${daysRemaining} Tage`;
+        if (daysRemaining === null) {
+            return `Gültig bis ${formattedDate}`;
+        }
+
+        return `Gültig bis ${formattedDate} · noch ${daysRemaining} Tage`;
     }
 
     async function logout() {
@@ -403,6 +448,11 @@
                     cache: "no-store"
                 }
             );
+        } catch (error) {
+            console.error(
+                "Abmelden fehlgeschlagen:",
+                error
+            );
         } finally {
             location.href = "/index.html";
         }
@@ -414,15 +464,6 @@
             .toLocaleLowerCase("de-AT");
     }
 
-    function escapeHtml(value) {
-        return String(value || "")
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-    }
-
     function addSessionStyles() {
         if (
             document.getElementById(
@@ -432,13 +473,29 @@
             return;
         }
 
-        const style = document.createElement("style");
+        const style =
+            document.createElement("style");
 
-        style.id = "sessionInterfaceStyles";
+        style.id =
+            "sessionInterfaceStyles";
 
         style.textContent = `
             .topbar {
                 width: 100%;
+            }
+
+            .login-link {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: #27352f;
+                font-size: 14px;
+                font-weight: 700;
+                text-decoration: none;
+            }
+
+            .login-link:hover {
+                color: #4f7064;
             }
 
             .user-statusbar {
@@ -448,7 +505,12 @@
                 align-items: center;
                 width: 100%;
                 padding: 13px 16px;
-                background: rgba(255, 253, 249, 0.96);
+                background: rgba(
+                    255,
+                    253,
+                    249,
+                    0.96
+                );
                 border: 1px solid #e2ddd4;
                 border-radius: 15px;
             }
