@@ -52,7 +52,7 @@
 <p>Hier findest du deine Kontodaten und die Gültigkeit deines Zugangs.</p>
 </section>
 <div id="accountMessage" class="account-message" role="status" aria-live="polite">Deine Kontodaten werden geladen …</div>
-<div id="accountData" hidden>
+<div id="accountData" hidden><section class="account-card" aria-labelledby="newsletterTitle"><h2 id="newsletterTitle">Dein Newsletter</h2><form id="newsletterForm"><label style="display:flex;gap:10px;align-items:flex-start;line-height:1.6"><input id="accountNewsletter" type="checkbox" disabled style="margin-top:5px"><span>Ja, ich möchte den Newsletter mit Neuigkeiten, neuen Produkten und Angeboten von Seelenkraft-Energetik erhalten.<br><small>Du kannst deine Zustimmung jederzeit hier widerrufen.</small></span></label><button id="newsletterSave" type="submit" disabled style="margin-top:18px;padding:10px 18px;border:0;border-radius:10px;background:#354c40;color:white;cursor:pointer">Einstellung speichern</button><p id="newsletterMessage" role="status" aria-live="polite"></p></form></section>
 <section class="account-card" aria-labelledby="profileTitle">
 <h2 id="profileTitle">Deine Kontodaten</h2>
 <dl class="account-details">
@@ -155,6 +155,7 @@
     loadAccount();
 })();
 </script>
+<script src="js/newsletter-account.js"></script>
+<script src="js/newsletter-menu.js"></script>
 </body>
 </html>
-

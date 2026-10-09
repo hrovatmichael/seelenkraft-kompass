@@ -1,28 +1,5 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anmelden | Seelenkraft-Kompass</title>
-  <link rel="stylesheet" href="css/login.css">
-</head>
-<body>
-  <main class="login-page">
-    <section class="login-card">
-      <a class="back-link" href="index.html">Zurück zum Chakrentest</a>
-      <p class="eyebrow">SEELENKRAFT-KOMPASS</p>
-      <h1>Willkommen zurück</h1>
-      <p>Melde dich an, um deine freigeschalteten Chakra-Bereiche zu öffnen.</p>
-      <form id="loginForm">
-        <label for="username">Benutzername</label>
-        <input id="username" name="username" autocomplete="username" required>
-        <label for="password">Passwort</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" required>
-        <button id="loginButton" type="submit">Anmelden</button>
-        <p id="loginMessage" class="message" role="status"></p>
-      </form>
-    </section>
-  </main>
-  <script src="js/auth.js"></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anmelden | Seelenkraft-Kompass</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#f6f3ed;color:#27352f;font-family:Arial,sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}main{width:100%;max-width:440px;background:#fffdf9;padding:32px;border:1px solid #e2ddd4;border-radius:22px}h1{margin:12px 0 24px}label.field{display:block;margin:18px 0}input:not([type=checkbox]){display:block;width:100%;margin-top:8px;padding:12px;border:1px solid #cfc7bb;border-radius:10px;font:inherit}button{width:100%;padding:13px;border:0;border-radius:12px;background:#354c40;color:white;font:inherit;cursor:pointer}.newsletter{display:flex;align-items:flex-start;gap:10px;margin:22px 0;font-size:13px;line-height:1.6}.newsletter input{flex-shrink:0;margin-top:4px;accent-color:#354c40}small{display:block;color:#82786f}a{color:inherit}#loginMessage{line-height:1.6;font-size:14px}</style></head><body><main><small>SEELENKRAFT-KOMPASS</small><h1>Willkommen zurück.</h1>
+<form id="loginForm"><label class="field">Benutzername<input id="username" autocomplete="username" required></label><label class="field">Passwort<input id="password" type="password" autocomplete="current-password" required></label>
+<label class="newsletter"><input id="newsletterAccepted" type="checkbox"><span>Ja, ich möchte den Newsletter mit Neuigkeiten, neuen Produkten und Angeboten von Seelenkraft-Energetik erhalten.<small>Freiwillig. Du kannst dich jederzeit wieder abmelden. Bestehende Einstellungen änderst du in „Mein Konto“.</small></span></label>
+<button id="loginButton" type="submit">Anmelden</button><p id="loginMessage" role="status" aria-live="polite"></p></form><a href="index.html">Zum Seelenkraft-Kompass</a></main><script src="js/login-newsletter.js"></script></body></html>
