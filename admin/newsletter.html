@@ -1,6 +1,55 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E-Mails für Newsletter</title>
-<link rel="stylesheet" href="../css/main.css"><link rel="stylesheet" href="../css/menu.css"><link rel="stylesheet" href="../css/layout-fix.css"><link rel="stylesheet" href="../css/mobile-status.css"><link rel="stylesheet" href="../css/statusbar.css">
-<style>.newsletter-panel{background:#fffdf9;border:1px solid #e2ddd4;border-radius:20px;padding:24px;margin-top:24px}.newsletter-table{width:100%;border-collapse:collapse}.newsletter-table th,.newsletter-table td{text-align:left;padding:12px;border-bottom:1px solid #e2ddd4}.newsletter-scroll{overflow:auto}#newsletterAdmin[hidden]{display:none}#copyEmails{padding:10px 16px;border:0;border-radius:10px;background:#354c40;color:white;cursor:pointer}</style></head><body>
-<div class="layout"><aside class="sidebar"><div class="logo">Seelenkraft-Kompass</div><nav class="menu" aria-label="Hauptnavigation"><a href="../konto.html" class="menu-item account-menu-item">Mein Konto</a><a href="../index.html" class="menu-item">Chakrentest</a><a href="benutzer.html" class="menu-item">Benutzerverwaltung</a></nav></aside><main class="content"><header class="topbar"><a href="../login.html" class="login-link">Anmelden</a></header><p id="adminMessage" role="status">Zugriff wird geprüft …</p>
-<section id="newsletterAdmin" class="newsletter-panel" hidden><h1>E-Mails für Newsletter</h1><p>Benutzer mit Newsletter-Zustimmung und unveränderter E-Mail-Adresse.</p><p id="newsletterCount"></p><button id="copyEmails" type="button">E-Mail-Adressen kopieren</button><div class="newsletter-scroll"><table class="newsletter-table"><thead><tr><th>Benutzer</th><th>Name</th><th>E-Mail</th><th>Zustimmung</th></tr></thead><tbody id="newsletterRows"></tbody></table></div></section></main></div>
-<script src="../js/session-ui.js"></script><script src="../js/mobile-menu.js"></script><script src="../js/newsletter-menu.js"></script><script src="../js/newsletter-admin.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>E-Mails für Newsletter | Seelenkraft-Kompass</title>
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/menu.css">
+<link rel="stylesheet" href="../css/mobile-status.css">
+<link rel="stylesheet" href="../css/layout-fix.css">
+<link rel="stylesheet" href="../css/statusbar.css">
+<style>
+.newsletter-page{max-width:1100px;margin:24px auto 40px}
+.newsletter-panel{background:#fffdf9;border:1px solid #e2ddd4;border-radius:20px;padding:clamp(18px,3vw,30px);margin-top:24px}
+.newsletter-panel h1{color:#27352f;font-size:clamp(26px,4vw,36px);margin:0 0 16px}
+.newsletter-panel p{line-height:1.6}
+.newsletter-table{width:100%;border-collapse:collapse}
+.newsletter-table th,.newsletter-table td{text-align:left;padding:12px;border-bottom:1px solid #e2ddd4;vertical-align:top}
+.newsletter-scroll{overflow-x:auto;margin-top:20px}
+#newsletterAdmin[hidden]{display:none!important}
+#copyEmails{padding:12px 18px;border:0;border-radius:12px;background:#354c40;color:white;font:inherit;cursor:pointer}
+#adminMessage{line-height:1.6;color:#514b43}
+</style>
+</head><body>
+<div class="layout"><aside class="sidebar"><div class="logo">Seelenkraft-Kompass</div>
+<nav class="menu" aria-label="Hauptnavigation">
+<a href="../konto.html" class="menu-item account-menu-item">Mein Konto</a>
+<a href="../index.html" class="menu-item">Chakrentest</a>
+<a href="../wurzelchakra.html" class="menu-item">Wurzelchakra</a>
+<a href="../sakralchakra.html" class="menu-item">Sakralchakra</a>
+<a href="../solarplexuschakra.html" class="menu-item">Solarplexuschakra</a>
+<a href="../herzchakra.html" class="menu-item">Herzchakra</a>
+<a href="../halschakra.html" class="menu-item">Halschakra</a>
+<a href="../stirnchakra.html" class="menu-item">Stirnchakra</a>
+<a href="../kronenchakra.html" class="menu-item">Kronenchakra</a>
+<a href="newsletter.html" class="menu-item newsletter-menu-item active" aria-current="page">E-Mails für Newsletter</a>
+<a href="benutzer.html" class="menu-item admin-users-menu-item">Benutzerverwaltung</a>
+</nav></aside>
+<main class="content"><header class="topbar"><a href="../login.html" class="login-link">Anmelden</a></header>
+<div class="newsletter-page">
+<p id="adminMessage" role="status" aria-live="polite">Zugriff wird geprüft …</p>
+<section id="newsletterAdmin" class="newsletter-panel" hidden>
+<h1>E-Mails für Newsletter</h1>
+<p>Benutzer mit Newsletter-Zustimmung und unveränderter E-Mail-Adresse.</p>
+<p id="newsletterCount"></p>
+<button id="copyEmails" type="button">E-Mail-Adressen kopieren</button>
+<div class="newsletter-scroll"><table class="newsletter-table">
+<thead><tr><th scope="col">Benutzer</th><th scope="col">Name</th><th scope="col">E-Mail</th><th scope="col">Zustimmung</th></tr></thead>
+<tbody id="newsletterRows"></tbody>
+</table></div></section>
+</div></main></div>
+<script src="../js/session-ui.js"></script>
+<script src="../js/mobile-menu.js"></script>
+<script src="../js/newsletter-admin.js"></script>
+</body></html>
